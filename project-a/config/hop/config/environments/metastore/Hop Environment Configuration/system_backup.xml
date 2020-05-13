@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<element>
+  <id>system_backup</id>
+  <value/>
+  <type>String</type>
+  <children>
+    <child>
+      <id>openingLastEnvironmentAtStartup</id>
+      <value>Y</value>
+      <type>String</type>
+    </child>
+    <child>
+      <id>name</id>
+      <value>system_backup</value>
+      <type>String</type>
+    </child>
+    <child>
+      <id>enabled</id>
+      <value>Y</value>
+      <type>String</type>
+    </child>
+  </children>
+  <name>system_backup</name>
+  <security>
+    <owner/>
+    <owner-permissions-list/>
+  </security>
+</element>
