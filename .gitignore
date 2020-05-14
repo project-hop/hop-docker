@@ -1,0 +1,4 @@
+.DS_Store
+config/hop/.hoprc
+config/hop/config/.hoprc
+config/hop/config/history/

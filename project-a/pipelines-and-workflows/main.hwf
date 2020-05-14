@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow>
+  <name>New workflow</name>
+  <description/>
+  <extended_description/>
+  <workflow_version/>
+  <workflow_status>0</workflow_status>
+  <created_user>-</created_user>
+  <created_date>2020/04/16 17:20:54.976</created_date>
+  <modified_user>-</modified_user>
+  <modified_date>2020/04/16 17:20:54.976</modified_date>
+  <parameters>
+    <parameter>
+      <name>PARAM_LOG_MESSAGE</name>
+      <default_value/>
+      <description/>
+    </parameter>
+    <parameter>
+      <name>PARAM_WAIT_FOR_X_MINUTES</name>
+      <default_value/>
+      <description/>
+    </parameter>
+  </parameters>
+  <pass_batchid>N</pass_batchid>
+  <actions>
+    <action>
+      <name>START</name>
+      <description/>
+      <type>SPECIAL</type>
+      <attributes/>
+      <start>Y</start>
+      <dummy>N</dummy>
+      <repeat>N</repeat>
+      <schedulerType>0</schedulerType>
+      <intervalSeconds>0</intervalSeconds>
+      <intervalMinutes>60</intervalMinutes>
+      <hour>12</hour>
+      <minutes>0</minutes>
+      <weekDay>1</weekDay>
+      <DayOfMonth>1</DayOfMonth>
+      <parallel>N</parallel>
+      <nr>0</nr>
+      <xloc>144</xloc>
+      <yloc>64</yloc>
+      <attributes_hac/>
+    </action>
+    <action>
+      <name>Write to log</name>
+      <description/>
+      <type>WRITE_TO_LOG</type>
+      <attributes/>
+      <logmessage>====================
+
+I am just writing something to the log.
+   So you know I did actually some work ...
+
+Ok, let's at least print out the value
+of a parameters:
+
+PARAM_TEST: ${PARAM_LOG_MESSAGE}
+PROP_SAY_SOMETHING: ${PROP_SAY_SOMETHING}
+
+====================</logmessage>
+      <loglevel>Basic</loglevel>
+      <logsubject/>
+      <parallel>N</parallel>
+      <nr>0</nr>
+      <xloc>144</xloc>
+      <yloc>192</yloc>
+      <attributes_hac/>
+    </action>
+    <action>
+      <name>Success</name>
+      <description/>
+      <type>SUCCESS</type>
+      <attributes/>
+      <parallel>N</parallel>
+      <nr>0</nr>
+      <xloc>144</xloc>
+      <yloc>432</yloc>
+      <attributes_hac/>
+    </action>
+    <action>
+      <name>Wait for</name>
+      <description/>
+      <type>DELAY</type>
+      <attributes/>
+      <maximumTimeout>${PARAM_WAIT_FOR_X_MINUTES}</maximumTimeout>
+      <scaletime>1</scaletime>
+      <parallel>N</parallel>
+      <nr>0</nr>
+      <xloc>144</xloc>
+      <yloc>320</yloc>
+      <attributes_hac/>
+    </action>
+  </actions>
+  <hops>
+    <hop>
+      <from>START</from>
+      <to>Write to log</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Write to log</from>
+      <to>Wait for</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Wait for</from>
+      <to>Success</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+  </hops>
+  <notepads>
+    <notepad>
+      <note>Added to easily help debugging the k8s job container</note>
+      <xloc>208</xloc>
+      <yloc>320</yloc>
+      <width>333</width>
+      <heigth>26</heigth>
+      <fontname>.AppleSystemUIFont</fontname>
+      <fontsize>13</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+    </notepad>
+  </notepads>
+  <attributes/>
+</workflow>
