@@ -50,6 +50,9 @@ The most common use case will be that you run a **short-lived container** to jus
 Example for running a **workflow**:
 
 ```bash
+WORKING_DIR="$( cd "$( /usr/bin/dirname "$0" )" && pwd )"
+VOLUME_DIR=${WORKING_DIR}/../tests/project-a
+
 docker run -it --rm \
   --env HOP_LOG_LEVEL=Basic \
   --env HOP_FILE_PATH=/files/pipelines-and-workflows/main.hwf \
@@ -57,7 +60,7 @@ docker run -it --rm \
   --env HOP_RUN_ENVIRONMENT=project-a-dev \
   --env HOP_RUN_CONFIG=classic \
   --env HOP_RUN_PARAMETERS=PARAM_LOG_MESSAGE=Hello,PARAM_WAIT_FOR_X_MINUTES=1 \
-  -v ${WORKING_DIR}/project-a:/files \
+  -v ${VOLUME_DIR}:/files \
   --name my-simple-hop-container \
   diethardsteiner/project-hop:0.20-20200505.141953-75
 ```
@@ -68,7 +71,7 @@ If you need a **long-lived container**, this option is also available. Run this 
 docker run -it --rm \
   --env HOP_LOG_LEVEL=Basic \
   --env HOP_CONFIG_DIRECTORY=/files/config/hop/config \
-  -v ${WORKING_DIR}/project-a:/home/hop \
+  -v ${VOLUME_DIR}:/files \
   --name my-simple-hop-container \
   diethardsteiner/project-hop:0.20-20200505.141953-75
 ```
@@ -93,7 +96,7 @@ To test the workflow within the **Docker container**:
 
 ```
 ./hop-run.sh \
-  --file=/home/hop/pipelines-and-workflows/main.hwf \
+  --file=/files/pipelines-and-workflows/main.hwf \
   --environment=project-a-dev \
   --runconfig=classic \
   --parameters=PARAM_LOG_MESSAGE=Hello,PARAM_WAIT_FOR_X_MINUTES=1
