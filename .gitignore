@@ -2,3 +2,6 @@
 config/hop/.hoprc
 config/hop/config/.hoprc
 config/hop/config/history/
+resources/hop-assemblies-client*
+resources/latest_downloaded_version.info
+resources/hop/
