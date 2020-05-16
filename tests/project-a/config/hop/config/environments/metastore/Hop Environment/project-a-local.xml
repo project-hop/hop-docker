@@ -80,7 +80,7 @@
     </child>
     <child>
       <id>environmentHomeFolder</id>
-      <value>/Users/diethardsteiner/git/project-hop-in-the-cloud/project-a</value>
+      <value>/Users/diethardsteiner/git/hop-docker/tests/project-a</value>
       <type>String</type>
     </child>
   </children>
