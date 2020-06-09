@@ -25,16 +25,23 @@ node {
     echo "upstream Build Number: ${params.PRM_BUILD_NUMBER}"
   }
 
+
   stage('Build image') {
     docker.withRegistry('', 'dockerhub') {
+      if("${env.BRANCH_NAME}" == "master"){
 
-        def customImage = docker.build("projecthop/hop:${env.BUILD_ID}")
+        def customImage = docker.build("projecthop/hop:snapshot" , "--build-arg build_number=${params.PRM_BUILD_NUMBER}")
 
-        /* Push the container to the custom Registry */
-        customImage.push()
+      } else 
+      {
+
+        def customImage = docker.build("projecthop/hop:${params.PRM_BRANCHNAME}", "--build-arg build_number=${params.PRM_BUILD_NUMBER}")
+
+      }
+    
+    /* Push the container to the custom Registry */
+    customImage.push()
+
     }
   }
-
-
-
 }
