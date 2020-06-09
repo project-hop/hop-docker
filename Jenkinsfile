@@ -13,10 +13,12 @@ pipeline {
       }
     }
     stage('Upstream Variables') {
+      steps{
         def upstream = currentBuild.rawBuild.getCause(hudson.model.Cause$UpstreamCause)
         echo 'Upstream Description:' upstream?.shortDescription
         echo 'Upstream BuildNumber:' upstream?.upstreamBuild
         echo 'Upstream Project:' upstream?.upstreamProject
+      }
     }
     stage('Publish') {
       when {
