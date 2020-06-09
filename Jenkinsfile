@@ -7,12 +7,9 @@ node {
         artifactNumToKeepStr: '5']
     ],
     disableConcurrentBuilds(),
-    rateLimitBuilds([count: 1, durationName: 'minute', userBoost: false])
+    rateLimitBuilds([count: 1, durationName: 'minute', userBoost: false]),
+    pipelineTriggers([upstream(upstreamProjects: 'hop', threshold: hudson.model.Result.SUCCESS)]),
   ])
-
-  triggers {
-    upstream(upstreamProjects: 'hop', threshold: hudson.model.Result.SUCCESS)
-  }
 
   stage('Checkout') {
     checkout scm
