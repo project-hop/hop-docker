@@ -3,8 +3,8 @@ node {
     [$class: 'BuildDiscarderProperty', 
       strategy: [
         $class: 'LogRotator', 
-        artifactDaysToKeepStr: '', 
-        artifactNumToKeepStr: '5']
+        artifactNumToKeepStr: '5', 
+        daysToKeepStr: '30'
     ],
     disableConcurrentBuilds(),
     rateLimitBuilds([count: 1, durationName: 'minute', userBoost: false]),
