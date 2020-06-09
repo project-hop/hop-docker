@@ -15,6 +15,7 @@ node {
     ]),
   ])
 
+
   stage('Checkout') {
     checkout scm
   }
@@ -23,5 +24,17 @@ node {
     echo "upstream Branch: ${params.PRM_BRANCHNAME}"
     echo "upstream Build Number: ${params.PRM_BUILD_NUMBER}"
   }
+
+  stage('Build image') {
+    docker.withRegistry('', 'dockerhub') {
+
+        def customImage = docker.build("hop:${env.BUILD_ID}")
+
+        /* Push the container to the custom Registry */
+        customImage.push()
+    }
+  }
+
+
 
 }
