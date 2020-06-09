@@ -20,8 +20,8 @@ node {
   }
 
   stage('Upstream Variables') {
-    echo "upstream Branch:" "${params.PRM_BRANCHNAME}"
-    echo "upstream Build Number:" "${params.PRM_BUILD_NUMBER}"
+    echo "upstream Branch: ${params.PRM_BRANCHNAME}"
+    echo "upstream Build Number: ${params.PRM_BUILD_NUMBER}"
   }
 
 }
