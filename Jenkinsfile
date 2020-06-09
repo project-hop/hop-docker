@@ -30,12 +30,12 @@ node {
       docker.withRegistry('', 'dockerhub') {
         if("${env.BRANCH_NAME}" == "master"){
 
-          def customImage = docker.build("projecthop/hop:snapshot" , "--build-arg build_number=${params.PRM_BUILD_NUMBER}")
+          def customImage = docker.build("projecthop/hop:snapshot" , "--build-arg build_number=${params.PRM_BUILD_NUMBER} .")
 
         } else 
         {
 
-          def customImage = docker.build("projecthop/hop:${params.PRM_BRANCHNAME}", "--build-arg build_number=${params.PRM_BUILD_NUMBER}")
+          def customImage = docker.build("projecthop/hop:${params.PRM_BRANCHNAME}", "--build-arg build_number=${params.PRM_BUILD_NUMBER} .")
 
         }
     
