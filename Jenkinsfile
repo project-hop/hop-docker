@@ -26,7 +26,7 @@ node {
   }
 
   stage('Build image') {
-    docker.withRegistry('projecthop/hop', 'dockerhub') {
+    docker.withRegistry('https://hub.docker.com/repository/docker/projecthop/hop', 'dockerhub') {
 
         def customImage = docker.build(":${env.BUILD_ID}")
 
