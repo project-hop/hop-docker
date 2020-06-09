@@ -28,24 +28,24 @@ node {
 
     stage('Build image') {
       docker.withRegistry('', 'dockerhub') {
-        if("${env.BRANCH_NAME}" == "master"){
+        if("${params.PRM_BRANCHNAME}" == "master"){
 
           def customImage = docker.build("projecthop/hop:snapshot" , "--build-arg build_number=${params.PRM_BUILD_NUMBER} .")
-
+          customImage.push()
         } else 
         {
 
           def customImage = docker.build("projecthop/hop:${params.PRM_BRANCHNAME}", "--build-arg build_number=${params.PRM_BUILD_NUMBER} .")
-
+          customImage.push()
         }
     
         /* Push the container to the custom Registry */
-        customImage.push()
+        
       }
   }
 
     stage('Cleanup'){
-      if("${env.BRANCH_NAME}" == "master"){
+      if("${params.PRM_BRANCHNAME}" == "master"){
 
         sh 'docker rmi projecthop/hop:snapshot'
       }
