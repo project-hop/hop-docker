@@ -4,7 +4,7 @@ node {
       strategy: [
         $class: 'LogRotator', 
         artifactNumToKeepStr: '5', 
-        daysToKeepStr: '30'
+        daysToKeepStr: '30']
     ],
     disableConcurrentBuilds(),
     rateLimitBuilds([count: 1, durationName: 'minute', userBoost: false]),
