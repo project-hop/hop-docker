@@ -21,7 +21,7 @@ node {
     echo "Upstream build: ${b.getFullDisplayName()}"
     manualTrigger = false
     }
-    echo "manual trigger?: " manualTrigger
+    echo "manual trigger?: " ${manualTrigger}
   }
 
 }
