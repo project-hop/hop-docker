@@ -14,6 +14,8 @@ ENV HOP_FILE_PATH=
 ENV HOP_LOG_PATH=$DEPLOYMENT_PATH/hop.err.log
 # path to hop config directory
 ENV HOP_CONFIG_DIRECTORY=
+# path to jdbc drivers
+ENV HOP_SHARED_JDBC_DIRECTORY=
 # environment to use with hop run
 ENV HOP_RUN_ENVIRONMENT=
 # hop run configuration to use
