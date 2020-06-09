@@ -1,8 +1,8 @@
 node {
   environment {
-    UPSTREAM_CAUSE = "${currentBuild.getBuildCauses()[0].shortDescription}",
-    UPSTREAM_BUILDNUMBER = "${currentBuild.getBuildCauses()[0].upstreamBuild}",
-    UPSTREAM_PROJECT = "${currentBuild.getBuildCauses()[0].upstreamProject}",
+    UPSTREAM_CAUSE = "${currentBuild.getBuildCauses()[0].shortDescription}"
+    UPSTREAM_BUILDNUMBER = "${currentBuild.getBuildCauses()[0].upstreamBuild}"
+    UPSTREAM_PROJECT = "${currentBuild.getBuildCauses()[0].upstreamProject}"
   }
 
   properties([
