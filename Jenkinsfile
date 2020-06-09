@@ -1,10 +1,4 @@
 node {
-  environment {
-    UPSTREAM_CAUSE = "${currentBuild.getBuildCauses()[0].shortDescription}"
-    UPSTREAM_BUILDNUMBER = "${currentBuild.getBuildCauses()[0].upstreamBuild}"
-    UPSTREAM_PROJECT = "${currentBuild.getBuildCauses()[0].upstreamProject}"
-  }
-
   properties([
     [$class: 'BuildDiscarderProperty', 
       strategy: [
@@ -15,6 +9,10 @@ node {
     disableConcurrentBuilds(),
     rateLimitBuilds([count: 1, durationName: 'minute', userBoost: false]),
     pipelineTriggers([upstream(upstreamProjects: 'hop', threshold: hudson.model.Result.SUCCESS)]),
+    parameters([
+     stringParam(name: 'PRM_BRANCHNAME', defaultValue: "master"),
+     stringParam(name: 'PRM_BUILD_NUMBER', defaultValue: "0"),
+    ]),
   ])
 
   stage('Checkout') {
@@ -22,7 +20,8 @@ node {
   }
 
   stage('Upstream Variables') {
-    echo "upstream cause:" ${env.UPSTREAM_CAUSE}
+    echo "upstream Branch:" ${PRM_BRANCHNAME}
+    echo "upstream Build Number:" ${PRM_BUILD_NUMBER}
   }
 
 }
