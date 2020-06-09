@@ -1,32 +1,62 @@
-pipeline {
-  agent { label 'docker' }
-  options {
-    buildDiscarder(logRotator(numToKeepStr: '5'))
-  }
-  triggers {
-    upstream(upstreamProjects: 'hop', threshold: hudson.model.Result.SUCCESS)
-  }
-  stages {
-    stage('Build') {
-      steps {
-        sh 'echo Building'
-      }
+node {
+  properties([
+    [$class: 'BuildDiscarderProperty', 
+      strategy: [
+        $class: 'LogRotator', 
+        artifactNumToKeepStr: '5', 
+        daysToKeepStr: '30']
+    ],
+    disableConcurrentBuilds(),
+    rateLimitBuilds([count: 1, durationName: 'minute', userBoost: false]),
+    pipelineTriggers([upstream(upstreamProjects: 'hop', threshold: hudson.model.Result.SUCCESS)]),
+    parameters([
+     string(name: 'PRM_BRANCHNAME', defaultValue: "master"),
+     string(name: 'PRM_BUILD_NUMBER', defaultValue: "0"),
+    ]),
+  ])
+
+  try{
+    stage('Checkout') {
+      checkout scm
     }
+
     stage('Upstream Variables') {
-        def upstream = currentBuild.rawBuild.getCause(hudson.model.Cause$UpstreamCause)
-        echo 'Upstream Description:' upstream?.shortDescription
-        echo 'Upstream BuildNumber:' upstream?.upstreamBuild
-        echo 'Upstream Project:' upstream?.upstreamProject
+      echo "upstream Branch: ${params.PRM_BRANCHNAME}"
+      echo "upstream Build Number: ${params.PRM_BUILD_NUMBER}"
     }
-    stage('Publish') {
-      when {
-        branch 'master'
+
+
+    stage('Build image') {
+      docker.withRegistry('', 'dockerhub') {
+        if("${params.PRM_BRANCHNAME}" == "master"){
+
+          def customImage = docker.build("projecthop/hop:snapshot" , "--build-arg build_number=${params.PRM_BUILD_NUMBER} .")
+          customImage.push()
+        } else 
+        {
+
+          def customImage = docker.build("projecthop/hop:${params.PRM_BRANCHNAME}", "--build-arg build_number=${params.PRM_BUILD_NUMBER} .")
+          customImage.push()
+        }
+    
+        /* Push the container to the custom Registry */
+        
       }
-      steps {
-        //withDockerRegistry([ credentialsId: "6544de7e-17a4-4576-9b9b-e86bc1e4f903", url: "" ]) {
-        //  sh 'echo push to dockerhub'
-        //}
+  }
+
+    stage('Cleanup'){
+      if("${params.PRM_BRANCHNAME}" == "master"){
+
+        sh 'docker rmi projecthop/hop:snapshot'
+      }
+      else
+      {
+        sh "docker rmi projecthop/hop:${params.PRM_BRANCHNAME}"
       }
     }
+
+  } finally 
+  {
+    cleanWs()
   }
 }
