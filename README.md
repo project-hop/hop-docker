@@ -1,3 +1,4 @@
+
 # project-hop-in-the-cloud
 
 A **Hop Docker image** supporting both **short-lived** and **long-lived** setups.
@@ -40,6 +41,7 @@ Environment Variable	| Required	| Description
 `HOP_RUN_CONFIG`	| Yes	| Name of the Hop run configuration to use
 `HOP_RUN_PARAMETERS`	| No	| Parameters that should be passed on to the hop-run command. Specify as comma separated list, e.g. `PARAM_1=aaa,PARAM_2=bbb`. Optional.
 `HOP_OPTIONS`	| No	| Any JRE options you want to set
+`HOP_SHARED_JDBC_DIRECTORY`	| No	| Path to the directory where the JDCB drivers are located
 
 The `Required` column relates to running a short-lived container.
 
@@ -56,7 +58,7 @@ VOLUME_DIR=${WORKING_DIR}/../tests/project-a
 docker run -it --rm \
   --env HOP_LOG_LEVEL=Basic \
   --env HOP_FILE_PATH=/files/pipelines-and-workflows/main.hwf \
-  --env HOP_CONFIG_DIRECTORY=/files/config/hop/config \
+  --env HOP_CONFIG_DIRECTORY=/files/config/hop \
   --env HOP_RUN_ENVIRONMENT=project-a-dev \
   --env HOP_RUN_CONFIG=classic \
   --env HOP_RUN_PARAMETERS=PARAM_LOG_MESSAGE=Hello,PARAM_WAIT_FOR_X_MINUTES=1 \
@@ -70,7 +72,7 @@ If you need a **long-lived container**, this option is also available. Run this 
 ```bash
 docker run -it --rm \
   --env HOP_LOG_LEVEL=Basic \
-  --env HOP_CONFIG_DIRECTORY=/files/config/hop/config \
+  --env HOP_CONFIG_DIRECTORY=/files/config/hop \
   -v ${VOLUME_DIR}:/files \
   --name my-simple-hop-container \
   diethardsteiner/project-hop:0.20-20200505.141953-75
@@ -84,7 +86,7 @@ docker run -it --rm \
 To just test the workflow locally without Docker:
 
 ```
-export HOP_CONFIG_DIRECTORY=/Users/diethardsteiner/git/project-hop-in-the-cloud/project-a/config/hop/config
+export HOP_CONFIG_DIRECTORY=/Users/diethardsteiner/git/hop-docker/tests/project-a/config/hop
 ~/apps/hop/hop-run.sh \
   --file=/Users/diethardsteiner/git/project-hop-in-the-cloud/project-a/pipelines-and-workflows/main.hwf \
   --environment=project-a-local \
@@ -102,9 +104,6 @@ To test the workflow within the **Docker container**:
   --parameters=PARAM_LOG_MESSAGE=Hello,PARAM_WAIT_FOR_X_MINUTES=1
 ```
 
-## Shortcomings
-
-Currently the `hop-server` support is minimal.
 
 ## How to run the workflow within the Docker container
 
@@ -113,3 +112,14 @@ If you spin up a docker container with the hop server running:
 ```
 ./hop-run.sh --file=/home/hop/project-hop-in-the-cloud/project-a/pipelines-and-workflows/main.hwf --runconfig=classic --parameters=PARAM_LOG_MESSAGE=Hello,PARAM_WAIT_FOR_X_MINUTES=1
 ```
+
+## Tests
+
+### JDBC Drivers
+
+There is currently one test for loading external JDBC drivers. The test example relies on a **PostgreSQL** database being available. Place the drivers in `hop-docker/tests/project-a/jdbc-drivers`.
+
+# Shortcomings
+
+Currently the `hop-server` support is minimal.
+

@@ -45,7 +45,7 @@ VERSION=$(echo $VERSION_XML | sed 's/<value>//' | sed 's/<\/value>//')
 
 # export variable
 export HOP_LATEST_VERSION=${VERSION}
-echo "Latest verison: ${HOP_LATEST_VERSION}"
+echo "Latest version: ${HOP_LATEST_VERSION}"
 echo "Latest version file: ${LATEST_VERSION_FILE}"
 # construct full zip file name
 ZIP_FILENAME="hop-assemblies-client-${VERSION}.zip"
@@ -67,6 +67,8 @@ then
 	# download zip file
 	echo "[INFO] downloading: ${ZIP_FILENAME}"
 	curl -s -o ${DOWNLOAD_DIR}/${ZIP_FILENAME} ${FULL_URL}/${ZIP_FILENAME}
+  # remove previously extracted version of hop
+  rm -rf ${DOWNLOAD_DIR}/hop
   unzip ${DOWNLOAD_DIR}/${ZIP_FILENAME} -d ${DOWNLOAD_DIR}
   # rm ${DOWNLOAD_DIR}/${ZIP_FILENAME}
 
