@@ -16,10 +16,12 @@ node {
   }
 
   stage('Upstream Variables') {
-    def upstream = currentBuild.rawBuild.getCause(hudson.model.Cause$UpstreamCause)
-    echo 'Upstream Description:' upstream.shortDescription
-    echo 'Upstream BuildNumber:' upstream.upstreamBuild
-    echo 'Upstream Project:' upstream.upstreamProject
+    def manualTrigger = true
+    currentBuild.upstreamBuilds?.each { b ->
+    echo "Upstream build: ${b.getFullDisplayName()}"
+    manualTrigger = false
+    }
+    echo "manual trigger?: " manualTrigger
   }
 
 }
