@@ -1,4 +1,10 @@
 node {
+  environment {
+    UPSTREAM_CAUSE = "${currentBuild.getBuildCauses()[0].shortDescription}",
+    UPSTREAM_BUILDNUMBER = "${currentBuild.getBuildCauses()[0].upstreamBuild}",
+    UPSTREAM_PROJECT = "${currentBuild.getBuildCauses()[0].upstreamProject}",
+  }
+
   properties([
     [$class: 'BuildDiscarderProperty', 
       strategy: [
@@ -16,12 +22,7 @@ node {
   }
 
   stage('Upstream Variables') {
-    def manualTrigger = true
-    currentBuild.upstreamBuilds?.each { b ->
-    echo "Upstream build: ${b.getFullDisplayName()}"
-    manualTrigger = false
-    }
-    echo "manual trigger?: " ${manualTrigger}
+    echo "upstream cause:" ${env.UPSTREAM_CAUSE}
   }
 
 }
