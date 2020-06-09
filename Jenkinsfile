@@ -15,33 +15,48 @@ node {
     ]),
   ])
 
+  try{
+    stage('Checkout') {
+      checkout scm
+    }
 
-  stage('Checkout') {
-    checkout scm
+    stage('Upstream Variables') {
+      echo "upstream Branch: ${params.PRM_BRANCHNAME}"
+      echo "upstream Build Number: ${params.PRM_BUILD_NUMBER}"
+    }
+
+
+    stage('Build image') {
+      docker.withRegistry('', 'dockerhub') {
+        if("${env.BRANCH_NAME}" == "master"){
+
+          def customImage = docker.build("projecthop/hop:snapshot" , "--build-arg build_number=${params.PRM_BUILD_NUMBER}")
+
+        } else 
+        {
+
+          def customImage = docker.build("projecthop/hop:${params.PRM_BRANCHNAME}", "--build-arg build_number=${params.PRM_BUILD_NUMBER}")
+
+        }
+    
+        /* Push the container to the custom Registry */
+        customImage.push()
+      }
   }
 
-  stage('Upstream Variables') {
-    echo "upstream Branch: ${params.PRM_BRANCHNAME}"
-    echo "upstream Build Number: ${params.PRM_BUILD_NUMBER}"
-  }
-
-
-  stage('Build image') {
-    docker.withRegistry('', 'dockerhub') {
+    stage('Cleanup'){
       if("${env.BRANCH_NAME}" == "master"){
 
-        def customImage = docker.build("projecthop/hop:snapshot" , "--build-arg build_number=${params.PRM_BUILD_NUMBER}")
-
-      } else 
-      {
-
-        def customImage = docker.build("projecthop/hop:${params.PRM_BRANCHNAME}", "--build-arg build_number=${params.PRM_BUILD_NUMBER}")
-
+        sh 'docker rmi projecthop/hop:snapshot'
       }
-    
-    /* Push the container to the custom Registry */
-    customImage.push()
-
+      else
+      {
+        sh "docker rmi projecthop/hop:${params.PRM_BRANCHNAME}"
+      }
     }
+
+  } finally 
+  {
+    cleanWs()
   }
 }
