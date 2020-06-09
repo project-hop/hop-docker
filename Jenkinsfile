@@ -17,9 +17,9 @@ node {
 
   stage('Upstream Variables') {
     def upstream = currentBuild.rawBuild.getCause(hudson.model.Cause$UpstreamCause)
-    echo 'Upstream Description:' upstream?.shortDescription
-    echo 'Upstream BuildNumber:' upstream?.upstreamBuild
-    echo 'Upstream Project:' upstream?.upstreamProject
+    echo 'Upstream Description:' upstream.shortDescription
+    echo 'Upstream BuildNumber:' upstream.upstreamBuild
+    echo 'Upstream Project:' upstream.upstreamProject
   }
 
 }
