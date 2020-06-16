@@ -11,12 +11,12 @@ Example:
 
 ```
 export HOP_HOME=/Users/diethardsteiner/git/project-hop-in-the-cloud/project-a
-export HOP_METASTORE_FOLDER=/Users/diethardsteiner/git/project-hop-in-the-cloud/project-a
+export HOP_METADATA_FOLDER=/Users/diethardsteiner/git/project-hop-in-the-cloud/project-a
 ```
 
 # Running the Container
 
-The container image is available on [Docker Hub](https://hub.docker.com/r/diethardsteiner/project-hop).
+The container image is available on [Docker Hub](https://hub.docker.com/repository/docker/projecthop/hop).
 
 ## Container Folder Structure
 
