@@ -1,5 +1,8 @@
 FROM openjdk:8-alpine
-MAINTAINER Diethard Steiner
+MAINTAINER Project Hop Team
+# Argument Branch name, used to download correct version
+ARG BRANCH_NAME
+ENV BRANCH_NAME=$BRANCH_NAME
 # path to where the artefacts should be deployed to
 ENV DEPLOYMENT_PATH=/opt/project-hop
 # volume mount point
@@ -50,11 +53,14 @@ RUN apk update \
 #  && locale-gen \
 #  && update-locale LANG=${LANG} LC_ALL={LC_ALL}
 
-
 # copy the hop package from the local resources folder to the container image directory
-COPY --chown=hop:hop ./resources/hop/ ${DEPLOYMENT_PATH}/hop/
+COPY --chown=hop:hop ./resources/get-hop.sh ${DEPLOYMENT_PATH}/get-hop.sh
 COPY --chown=hop:hop ./resources/run.sh ${DEPLOYMENT_PATH}/run.sh
 COPY --chown=hop:hop ./resources/load-and-execute.sh ${DEPLOYMENT_PATH}/load-and-execute.sh
+
+
+# Fetch the specified hop version 
+RUN ${DEPLOYMENT_PATH}/get-hop.sh
 
 EXPOSE 8080
 
