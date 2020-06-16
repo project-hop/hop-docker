@@ -51,13 +51,16 @@ RUN apk update \
 #  && update-locale LANG=${LANG} LC_ALL={LC_ALL}
 
 
-
 # copy the hop package from the local resources folder to the container image directory
-COPY --chown=hop:hop ./resources/ ${DEPLOYMENT_PATH}
+COPY --chown=hop:hop ./resources/hop/ ${DEPLOYMENT_PATH}/hop/
+COPY --chown=hop:hop ./resources/run.sh ${DEPLOYMENT_PATH}/run.sh
+COPY --chown=hop:hop ./resources/load-and-execute.sh ${DEPLOYMENT_PATH}/load-and-execute.sh
+
+EXPOSE 8080
 
 # make volume available so that hop pipeline and workflow files can be provided easily
 VOLUME ["/files"]
 USER hop
 ENV PATH=$PATH:${DEPLOYMENT_PATH}/hop
 WORKDIR /home/hop
-ENTRYPOINT ["/opt/project-hop/load-and-execute.sh"]
+ENTRYPOINT ["/bin/bash", "/opt/project-hop/run.sh"]
