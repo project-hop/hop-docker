@@ -11,12 +11,12 @@ Example:
 
 ```
 export HOP_HOME=/Users/diethardsteiner/git/project-hop-in-the-cloud/project-a
-export HOP_METASTORE_FOLDER=/Users/diethardsteiner/git/project-hop-in-the-cloud/project-a
+export HOP_METADATA_FOLDER=/Users/diethardsteiner/git/project-hop-in-the-cloud/project-a
 ```
 
 # Running the Container
 
-The container image is available on [Docker Hub](https://hub.docker.com/r/diethardsteiner/project-hop).
+The container image is available on [Docker Hub](https://hub.docker.com/repository/docker/projecthop/hop).
 
 ## Container Folder Structure
 
@@ -42,6 +42,8 @@ Environment Variable	| Required	| Description
 `HOP_RUN_PARAMETERS`	| No	| Parameters that should be passed on to the hop-run command. Specify as comma separated list, e.g. `PARAM_1=aaa,PARAM_2=bbb`. Optional.
 `HOP_OPTIONS`	| No	| Any JRE options you want to set
 `HOP_SHARED_JDBC_DIRECTORY`	| No	| Path to the directory where the JDCB drivers are located
+`HOP_SERVER_USER`	| No	| Username for hop-server, only valid in long-lived containers. Default `cluster`
+`HOP_SERVER_PASS`	| No	| Password for hop-server user, only valid in long-lived containers. Default `cluster`
 
 The `Required` column relates to running a short-lived container.
 
@@ -73,11 +75,15 @@ If you need a **long-lived container**, this option is also available. Run this 
 docker run -it --rm \
   --env HOP_LOG_LEVEL=Basic \
   --env HOP_CONFIG_DIRECTORY=/files/config/hop \
+  --env HOP_SERVER_USER=admin \
+  --env HOP_SERVER_PASS=admin \
+  -p 8080:8080
   -v ${VOLUME_DIR}:/files \
   --name my-simple-hop-container \
   diethardsteiner/project-hop:0.20-20200505.141953-75
 ```
 
+You can then access the hop-server UI from your dockerhost at `http://localhost:8080`
 
 # Local Development
 

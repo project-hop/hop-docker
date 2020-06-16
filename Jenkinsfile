@@ -29,13 +29,13 @@ node {
     stage('Build image') {
       docker.withRegistry('', 'dockerhub') {
         if("${params.PRM_BRANCHNAME}" == "master"){
-
-          def customImage = docker.build("projecthop/hop:snapshot" , "--build-arg build_number=${params.PRM_BUILD_NUMBER} .")
+          // Create container with snapshot tag
+          def customImage = docker.build("projecthop/hop:snapshot" , "--build-arg BRANCH_NAME=${params.PRM_BRANCHNAME} .")
           customImage.push()
         } else 
         {
-
-          def customImage = docker.build("projecthop/hop:${params.PRM_BRANCHNAME}", "--build-arg build_number=${params.PRM_BUILD_NUMBER} .")
+          // create container with release tag
+          def customImage = docker.build("projecthop/hop:${params.PRM_BRANCHNAME}", "--build-arg BRANCH_NAME=${params.PRM_BRANCHNAME} .")
           customImage.push()
         }
     
