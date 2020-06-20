@@ -3,20 +3,6 @@
 
 A **Hop Docker image** supporting both **short-lived** and **long-lived** setups.
 
-## Hop Config
-
-Set HOP_HOME to the `project-a` directory (absolute path) when using Hop locally (on your laptop).
-
-Example:
-
-```
-export HOP_HOME=/Users/diethardsteiner/git/project-hop-in-the-cloud/project-a
-export HOP_METADATA_FOLDER=/Users/diethardsteiner/git/project-hop-in-the-cloud/project-a
-```
-
-# Running the Container
-
-The container image is available on [Docker Hub](https://hub.docker.com/repository/docker/projecthop/hop).
 
 ## Container Folder Structure
 
@@ -54,9 +40,6 @@ The most common use case will be that you run a **short-lived container** to jus
 Example for running a **workflow**:
 
 ```bash
-WORKING_DIR="$( cd "$( /usr/bin/dirname "$0" )" && pwd )"
-VOLUME_DIR=${WORKING_DIR}/../tests/project-a
-
 docker run -it --rm \
   --env HOP_LOG_LEVEL=Basic \
   --env HOP_FILE_PATH=/files/pipelines-and-workflows/main.hwf \
@@ -64,9 +47,9 @@ docker run -it --rm \
   --env HOP_RUN_ENVIRONMENT=project-a-dev \
   --env HOP_RUN_CONFIG=classic \
   --env HOP_RUN_PARAMETERS=PARAM_LOG_MESSAGE=Hello,PARAM_WAIT_FOR_X_MINUTES=1 \
-  -v ${VOLUME_DIR}:/files \
+  -v /path/to/local/dir:/files \
   --name my-simple-hop-container \
-  diethardsteiner/project-hop:0.20-20200505.141953-75
+  docker pull projecthop/hop:snapshot
 ```
 
 If you need a **long-lived container**, this option is also available. Run this command e.g.:
@@ -78,52 +61,12 @@ docker run -it --rm \
   --env HOP_SERVER_USER=admin \
   --env HOP_SERVER_PASS=admin \
   -p 8080:8080
-  -v ${VOLUME_DIR}:/files \
+  -v /path/to/local/dir:/files \
   --name my-simple-hop-container \
-  diethardsteiner/project-hop:0.20-20200505.141953-75
+  docker pull projecthop/hop:snapshot
 ```
 
 You can then access the hop-server UI from your dockerhost at `http://localhost:8080`
-
-# Local Development
-
-## How to run the workflow locally
-
-To just test the workflow locally without Docker:
-
-```
-export HOP_CONFIG_DIRECTORY=/Users/diethardsteiner/git/hop-docker/tests/project-a/config/hop
-~/apps/hop/hop-run.sh \
-  --file=/Users/diethardsteiner/git/project-hop-in-the-cloud/project-a/pipelines-and-workflows/main.hwf \
-  --environment=project-a-local \
-  --runconfig=classic \
-  --parameters=PARAM_LOG_MESSAGE=Hello,PARAM_WAIT_FOR_X_MINUTES=1
-```
-
-To test the workflow within the **Docker container**:  
-
-```
-./hop-run.sh \
-  --file=/files/pipelines-and-workflows/main.hwf \
-  --environment=project-a-dev \
-  --runconfig=classic \
-  --parameters=PARAM_LOG_MESSAGE=Hello,PARAM_WAIT_FOR_X_MINUTES=1
-```
-
-
-## How to run the workflow within the Docker container
-
-If you spin up a docker container with the hop server running:
-
-```
-./hop-run.sh --file=/home/hop/project-hop-in-the-cloud/project-a/pipelines-and-workflows/main.hwf --runconfig=classic --parameters=PARAM_LOG_MESSAGE=Hello,PARAM_WAIT_FOR_X_MINUTES=1
-```
-
-## Tests
-
-### JDBC Drivers
-
-There is currently one test for loading external JDBC drivers. The test example relies on a **PostgreSQL** database being available. Place the drivers in `hop-docker/tests/project-a/jdbc-drivers`.
 
 # Shortcomings
 
