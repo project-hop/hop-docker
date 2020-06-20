@@ -1,5 +1,5 @@
 
-# project-hop-in-the-cloud
+# hop-docker
 
 A **Hop Docker image** supporting both **short-lived** and **long-lived** setups.
 
@@ -22,7 +22,8 @@ Environment Variable	| Required	| Description
 `HOP_LOG_LEVEL`	| No	| Specify the log level. Default: `Basic`. Optional.
 `HOP_FILE_PATH`	| Yes	| Path to hop workflow or pipeline
 `HOP_LOG_PATH`	| No	| File path to hop log file
-`HOP_CONFIG_DIRECTORY`	| Yes	| Path to the Hop config folder
+`HOP_CONFIG_DIRECTORY`	| No	| Path to the Hop config folder. DISABLED for now since Hop config should not reside in the project directory.
+`HOP_ENVIRONMENT_DIRECTORY`	| Yes	| Path to the home of the hop environment. Should start with `/files`.
 `HOP_RUN_ENVIRONMENT`	| Yes	| Name of the Hop run environment to use
 `HOP_RUN_CONFIG`	| Yes	| Name of the Hop run configuration to use
 `HOP_RUN_PARAMETERS`	| No	| Parameters that should be passed on to the hop-run command. Specify as comma separated list, e.g. `PARAM_1=aaa,PARAM_2=bbb`. Optional.
@@ -43,7 +44,7 @@ Example for running a **workflow**:
 docker run -it --rm \
   --env HOP_LOG_LEVEL=Basic \
   --env HOP_FILE_PATH=/files/pipelines-and-workflows/main.hwf \
-  --env HOP_CONFIG_DIRECTORY=/files/config/hop \
+  --env HOP_ENVIRONMENT_DIRECTORY=/files \
   --env HOP_RUN_ENVIRONMENT=project-a-dev \
   --env HOP_RUN_CONFIG=classic \
   --env HOP_RUN_PARAMETERS=PARAM_LOG_MESSAGE=Hello,PARAM_WAIT_FOR_X_MINUTES=1 \
@@ -57,7 +58,7 @@ If you need a **long-lived container**, this option is also available. Run this 
 ```bash
 docker run -it --rm \
   --env HOP_LOG_LEVEL=Basic \
-  --env HOP_CONFIG_DIRECTORY=/files/config/hop \
+  --env HOP_ENVIRONMENT_DIRECTORY=/files \
   --env HOP_SERVER_USER=admin \
   --env HOP_SERVER_PASS=admin \
   -p 8080:8080

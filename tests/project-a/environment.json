@@ -1,0 +1,12 @@
+{
+  "description" : null,
+  "version" : null,
+  "company" : null,
+  "department" : null,
+  "project" : null,
+  "metadataBaseFolder" : "${ENVIRONMENT_HOME}/metadata",
+  "unitTestsBasePath" : "${ENVIRONMENT_HOME}/pipelines-and-workflows",
+  "dataSetsCsvFolder" : "${ENVIRONMENT_HOME}/datasets",
+  "enforcingExecutionInHome" : true,
+  "variables" : [ ]
+}

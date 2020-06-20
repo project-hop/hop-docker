@@ -34,6 +34,12 @@ write_server_config() {
 # retrieve files from volume
 # ... done via Dockerfile via specifying a volume ... 
 
+log "Registering your hop environment with local hop install"
+${DEPLOYMENT_PATH}/hop/hop-conf.sh \
+-environment=${HOP_RUN_ENVIRONMENT} \
+-environment-create \
+--environments-home=${HOP_ENVIRONMENT_DIRECTORY}
+
 if [ -z "${HOP_FILE_PATH}" ]
 then
     write_server_config

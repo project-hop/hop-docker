@@ -17,7 +17,7 @@
       <description/>
     </parameter>
     <parameter>
-      <name>PARAM_POSTGRESQL_DB_CONNECTION_HOST</name>
+      <name>PARAM_POSTGRESQL_DB_CONNECTION_HOSTNAME</name>
       <default_value>localhost</default_value>
       <description/>
     </parameter>
@@ -67,7 +67,7 @@
       <attributes/>
       <connections>
         <connection>
-          <name>postgresql</name>
+          <name>postgresql-connection</name>
           <waitfor>0</waitfor>
           <waittime>millisecond</waittime>
         </connection>

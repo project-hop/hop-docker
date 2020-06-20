@@ -18,8 +18,7 @@ echo "- Testing short-lived container: hop pipeline example - simple"
 docker run --rm \
   --env HOP_LOG_LEVEL=Basic \
   --env HOP_FILE_PATH=/files/pipelines-and-workflows/simple.hpl \
-  --env HOP_CONFIG_DIRECTORY=/files/config/hop \
-  --env HOP_RUN_ENVIRONMENT=project-a-dev \
+  --env HOP_RUN_ENVIRONMENT=project-a-test-env \
   --env HOP_RUN_CONFIG=classic \
   --env HOP_RUN_PARAMETERS= \
   -v ${VOLUME_DIR}:/files \
@@ -33,9 +32,8 @@ echo "- Testing short-lived container: hop pipeline example - db connection"
 docker run --rm \
   --env HOP_LOG_LEVEL=Basic \
   --env HOP_FILE_PATH=/files/pipelines-and-workflows/check-db-connection.hwf \
-  --env HOP_CONFIG_DIRECTORY=/files/config/hop \
   --env HOP_SHARED_JDBC_DIRECTORY=/files/jdbc \
-  --env HOP_RUN_ENVIRONMENT=project-a-dev \
+  --env HOP_RUN_ENVIRONMENT=project-a-test-env \
   --env HOP_RUN_CONFIG=classic \
   --env HOP_RUN_PARAMETERS=PARAM_POSTGRESQL_DB_CONNECTION_HOST=localhost,PARAM_POSTGRESQL_DB_CONNECTION_PORT=5432,PARAM_POSTGRESQL_DB_CONNECTION_USERNAME=diethardsteiner,PARAM_POSTGRESQL_DB_CONNECTION_PASSWORD=,PARAM_POSTGRESQL_DB_CONNECTION_DATABASE=test \
   -v ${VOLUME_DIR}:/files \
@@ -47,8 +45,7 @@ echo "- Testing short-lived container: hop workflow example"
 docker run --rm \
   --env HOP_LOG_LEVEL=Basic \
   --env HOP_FILE_PATH=/files/pipelines-and-workflows/main.hwf \
-  --env HOP_CONFIG_DIRECTORY=/files/config/hop \
-  --env HOP_RUN_ENVIRONMENT=project-a-dev \
+  --env HOP_RUN_ENVIRONMENT=project-a-test-env \
   --env HOP_RUN_CONFIG=classic \
   --env HOP_RUN_PARAMETERS=PARAM_LOG_MESSAGE=Hello,PARAM_WAIT_FOR_X_MINUTES=1 \
   -v ${VOLUME_DIR}:/files \

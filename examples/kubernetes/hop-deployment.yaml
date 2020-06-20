@@ -22,7 +22,7 @@ spec:
           mountPath: /tmp/git-repo
           readOnly: false
         command: ['sh', '-c', 
-          'cd /tmp/git-repo; git clone https://github.com/diethardsteiner/project-hop-in-the-cloud.git; chmod -R 777 *; echo $(ls -la)']
+          'cd /tmp/git-repo; git clone https://github.com/diethardsteiner/hop-docker.git; chmod -R 777 *; echo $(ls -la)']
       containers:
       - name: hop-server
         image: diethardsteiner/project-hop:0.20-20200505.141953-75
@@ -34,7 +34,7 @@ spec:
           - name: HOP_LOG_LEVEL
             value: "Basic"
           - name: HOP_CONFIG_DIRECTORY
-            value: "/files/project-hop-in-the-cloud/project-a/config/hop/config"
+            value: "/files/hop-docker/project-a/config/hop/config"
         resources:
           requests:
             memory: "4Gi"
