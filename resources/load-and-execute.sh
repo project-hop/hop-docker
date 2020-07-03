@@ -34,11 +34,18 @@ write_server_config() {
 # retrieve files from volume
 # ... done via Dockerfile via specifying a volume ... 
 
-log "Registering your hop environment with local hop install"
-${DEPLOYMENT_PATH}/hop/hop-conf.sh \
--environment=${HOP_RUN_ENVIRONMENT} \
--environment-create \
---environments-home=${HOP_ENVIRONMENT_DIRECTORY}
+
+log "Registering project config with Hop"
+${DEPLOYMENT_PATH}/hop-conf.sh \
+--project=${HOP_PROJECT_NAME} \
+--project-home="${HOP_PROJECT_DIRECTORY}" \
+--project-config-file="${HOP_PROJECT_CONFIG_FILE_NAME}"  
+
+log "Registering environment config with Hop"
+${DEPLOYMENT_PATH}/hop-conf.sh \
+--environment=${HOP_ENVIRONMENT_NAME} \
+--environment-project=${HOP_PROJECT_NAME} \
+--environment-config-files="${HOP_ENVIRONMENT_CONFIG_FILE_NAME_PATHS}"
 
 if [ -z "${HOP_FILE_PATH}" ]
 then
@@ -46,10 +53,12 @@ then
     log "Starting a hop-server on port 8080"
     ${DEPLOYMENT_PATH}/hop/hop-server.sh /tmp/hopserver.xml
 else
+    
     log "Running a single hop workflow / pipeline (${HOP_FILE_PATH})"
     ${DEPLOYMENT_PATH}/hop/hop-run.sh \
     --file=${HOP_FILE_PATH} \
-    --environment=${HOP_RUN_ENVIRONMENT} \
+    --project=${HOP_PROJECT_NAME} \
+    --environment=${HOP_ENVIRONMENT_NAME} \
     --runconfig=${HOP_RUN_CONFIG} \
     --level=${HOP_LOG_LEVEL} \
     --parameters=${HOP_RUN_PARAMETERS} \

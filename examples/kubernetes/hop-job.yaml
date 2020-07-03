@@ -32,7 +32,7 @@ spec:
             value: "/files/hop-docker/project-a/pipelines-and-workflows/main.hwf"
           - name: HOP_CONFIG_DIRECTORY
             value: "/files/hop-docker/project-a/config/hop/config"
-          - name: HOP_RUN_ENVIRONMENT
+          - name: HOP_ENVIRONMENT_NAME
             value: "project-a-dev"
           - name: HOP_RUN_CONFIG
             value: "classic"

@@ -22,9 +22,12 @@ Environment Variable	| Required	| Description
 `HOP_LOG_LEVEL`	| No	| Specify the log level. Default: `Basic`. Optional.
 `HOP_FILE_PATH`	| Yes	| Path to hop workflow or pipeline
 `HOP_LOG_PATH`	| No	| File path to hop log file
-`HOP_CONFIG_DIRECTORY`	| No	| Path to the Hop config folder. DISABLED for now since Hop config should not reside in the project directory.
-`HOP_ENVIRONMENT_DIRECTORY`	| Yes	| Path to the home of the hop environment. Should start with `/files`.
-`HOP_RUN_ENVIRONMENT`	| Yes	| Name of the Hop run environment to use
+`HOP_CONFIG_DIRECTORY`	| No	| Path to the Hop config folder. DISABLED for now.
+`HOP_PROJECT_NAME`	| Yes	| Name of the Hop project to use
+`HOP_PROJECT_DIRECTORY`	| Yes	| Path to the home of the hop project. Should start with `/files`.
+`HOP_PROJECT_CONFIG_FILE_NAME`	| No	| Name of the project config file including file extension. Defaults to `project-config.json`.
+`HOP_ENVIRONMENT_NAME`	| Yes	| Name of the Hop run environment to use
+`HOP_ENVIRONMENT_CONFIG_FILE_NAME_PATHS`	| Yes	| comma separated list of paths to environment config files (including filename and file extension). paths should start with `/files`.
 `HOP_RUN_CONFIG`	| Yes	| Name of the Hop run configuration to use
 `HOP_RUN_PARAMETERS`	| No	| Parameters that should be passed on to the hop-run command. Specify as comma separated list, e.g. `PARAM_1=aaa,PARAM_2=bbb`. Optional.
 `HOP_OPTIONS`	| No	| Any JRE options you want to set
@@ -45,7 +48,7 @@ docker run -it --rm \
   --env HOP_LOG_LEVEL=Basic \
   --env HOP_FILE_PATH=/files/pipelines-and-workflows/main.hwf \
   --env HOP_ENVIRONMENT_DIRECTORY=/files \
-  --env HOP_RUN_ENVIRONMENT=project-a-dev \
+  --env HOP_ENVIRONMENT_NAME=project-a-dev \
   --env HOP_RUN_CONFIG=classic \
   --env HOP_RUN_PARAMETERS=PARAM_LOG_MESSAGE=Hello,PARAM_WAIT_FOR_X_MINUTES=1 \
   -v /path/to/local/dir:/files \
