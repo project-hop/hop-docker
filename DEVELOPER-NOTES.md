@@ -66,7 +66,7 @@ Now you are ready to run the test processes:
   --runconfig=classic
 
 ./hop-run.sh \
-  --file=/Users/diethardsteiner/git/hop-docker/tests/project-a/pipelines-and-workflows/main.hwf \
+  --file='${PROJECT_HOME}/pipelines-and-workflows/main.hwf' \
   --project=project-a \
   --environment=project-a-dev \
   --runconfig=classic \
@@ -77,7 +77,7 @@ To test the workflow within the **Docker container**:
 
 ```
 ./hop-run.sh \
-  --file=/files/pipelines-and-workflows/main.hwf \
+  --file='${PROJECT_HOME}/pipelines-and-workflows/main.hwf' \
   --project=project-a \
   --environment=project-a-dev \
   --runconfig=classic \

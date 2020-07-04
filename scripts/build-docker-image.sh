@@ -17,8 +17,11 @@ VOLUME_DIR=${WORKING_DIR}/../tests/project-a
 echo "- Testing short-lived container: hop pipeline example - simple"
 docker run --rm \
   --env HOP_LOG_LEVEL=Basic \
-  --env HOP_FILE_PATH=/files/pipelines-and-workflows/simple.hpl \
+  --env HOP_FILE_PATH='${PROJECT_HOME}/pipelines-and-workflows/simple.hpl' \
+  --env HOP_PROJECT_DIRECTORY=/files/project \
+  --env HOP_PROJECT_NAME=project-a
   --env HOP_ENVIRONMENT_NAME=project-a-test \
+  --env HOP_ENVIRONMENT_CONFIG_FILE_NAME_PATHS=/files/config/project-a-test.json \
   --env HOP_RUN_CONFIG=classic \
   --env HOP_RUN_PARAMETERS= \
   -v ${VOLUME_DIR}:/files \
@@ -31,9 +34,12 @@ docker run --rm \
 echo "- Testing short-lived container: hop pipeline example - db connection"
 docker run --rm \
   --env HOP_LOG_LEVEL=Basic \
-  --env HOP_FILE_PATH=/files/pipelines-and-workflows/check-db-connection.hwf \
-  --env HOP_SHARED_JDBC_DIRECTORY=/files/jdbc \
+  --env HOP_FILE_PATH='${PROJECT_HOME}/pipelines-and-workflows/check-db-connection.hwf' \
+  --env HOP_PROJECT_DIRECTORY=/files/project \
+  --env HOP_PROJECT_NAME=project-a
   --env HOP_ENVIRONMENT_NAME=project-a-test \
+  --env HOP_ENVIRONMENT_CONFIG_FILE_NAME_PATHS=/files/config/project-a-test.json \
+  --env HOP_SHARED_JDBC_DIRECTORY=/files/jdbc \
   --env HOP_RUN_CONFIG=classic \
   --env HOP_RUN_PARAMETERS=PARAM_POSTGRESQL_DB_CONNECTION_HOST=localhost,PARAM_POSTGRESQL_DB_CONNECTION_PORT=5432,PARAM_POSTGRESQL_DB_CONNECTION_USERNAME=diethardsteiner,PARAM_POSTGRESQL_DB_CONNECTION_PASSWORD=,PARAM_POSTGRESQL_DB_CONNECTION_DATABASE=test \
   -v ${VOLUME_DIR}:/files \
@@ -44,8 +50,11 @@ docker run --rm \
 echo "- Testing short-lived container: hop workflow example"
 docker run --rm \
   --env HOP_LOG_LEVEL=Basic \
-  --env HOP_FILE_PATH=/files/pipelines-and-workflows/main.hwf \
+  --env HOP_FILE_PATH='${PROJECT_HOME}/pipelines-and-workflows/main.hwf' \
+  --env HOP_PROJECT_DIRECTORY=/files/project \
+  --env HOP_PROJECT_NAME=project-a
   --env HOP_ENVIRONMENT_NAME=project-a-test \
+  --env HOP_ENVIRONMENT_CONFIG_FILE_NAME_PATHS=/files/config/project-a-test.json \
   --env HOP_RUN_CONFIG=classic \
   --env HOP_RUN_PARAMETERS=PARAM_LOG_MESSAGE=Hello,PARAM_WAIT_FOR_X_MINUTES=1 \
   -v ${VOLUME_DIR}:/files \

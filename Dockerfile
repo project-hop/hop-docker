@@ -16,7 +16,7 @@ ENV HOP_FILE_PATH=
 # file path to hop log file, e.g. ~/hop.err.log
 ENV HOP_LOG_PATH=$DEPLOYMENT_PATH/hop.err.log
 # path to hop config directory
-# ENV HOP_CONFIG_DIRECTORY= DISABLED for now 
+# ENV /files/project= DISABLED for now 
 # path to jdbc drivers
 ENV HOP_SHARED_JDBC_DIRECTORY=
 # name of the Hop project to use

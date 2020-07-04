@@ -46,9 +46,11 @@ Example for running a **workflow**:
 ```bash
 docker run -it --rm \
   --env HOP_LOG_LEVEL=Basic \
-  --env HOP_FILE_PATH=/files/pipelines-and-workflows/main.hwf \
-  --env HOP_ENVIRONMENT_DIRECTORY=/files \
-  --env HOP_ENVIRONMENT_NAME=project-a-dev \
+  --env HOP_FILE_PATH='${PROJECT_HOME}/pipelines-and-workflows/main.hwf' \
+  --env HOP_PROJECT_DIRECTORY=/files/project \
+  --env HOP_PROJECT_NAME=project-a
+  --env HOP_ENVIRONMENT_NAME=project-a-test \
+  --env HOP_ENVIRONMENT_CONFIG_FILE_NAME_PATHS=/files/config/project-a-test.json \
   --env HOP_RUN_CONFIG=classic \
   --env HOP_RUN_PARAMETERS=PARAM_LOG_MESSAGE=Hello,PARAM_WAIT_FOR_X_MINUTES=1 \
   -v /path/to/local/dir:/files \
