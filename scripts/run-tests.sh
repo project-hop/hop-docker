@@ -68,7 +68,7 @@ docker run --rm \
   
 
 # start container - long-lived process example
-docker run -it --rm \
+docker run --rm \
   --env HOP_LOG_LEVEL=Basic \
   --env HOP_PROJECT_DIRECTORY=/files/project \
   --env HOP_PROJECT_NAME=project-a \

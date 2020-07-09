@@ -79,5 +79,5 @@ VOLUME ["/files"]
 USER hop
 ENV PATH=$PATH:${DEPLOYMENT_PATH}/hop
 WORKDIR /home/hop
-CMD ["/bin/bash"]
-# ENTRYPOINT ["/bin/bash", "/opt/project-hop/run.sh"]
+# CMD ["/bin/bash"]
+ENTRYPOINT ["/bin/bash", "/opt/project-hop/run.sh"]
