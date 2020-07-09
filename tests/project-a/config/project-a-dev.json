@@ -1,0 +1,11 @@
+{
+  "variables" : [ {
+    "name" : "VAR_ENV_TEST1",
+    "value" : "c",
+    "description" : ""
+  }, {
+    "name" : "VAR_ENV_TEST2",
+    "value" : "d",
+    "description" : ""
+  } ]
+}

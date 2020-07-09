@@ -42,7 +42,11 @@ Register the `project-a-dev` with your **Hop config**:
 --project-variables=VAR_PROJECT_TEST1=a,VAR_PROJECT_TEST2=b \
 --project-enforce-execution=true
 
+
 # Create Hop environment
+
+## -- OPEN -- USE git repo config file instead --- ##
+
 ./hop-conf.sh \
 --environment=project-a-dev \
 --environment-create \

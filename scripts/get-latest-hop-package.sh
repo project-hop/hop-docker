@@ -12,6 +12,8 @@
 # adjusted for project hop docker by DS 2020-05-15
 #
 
+# NOT USED ANY MORE - REPLACED BY resources/get-hop.sh
+
 
 # SCRIPT_DIR="$(dirname "$(readlink -f "$0")")" -- doesn't work on macos
 SCRIPT_DIR="$( cd "$( /usr/bin/dirname "$0" )" && pwd )"

@@ -39,7 +39,7 @@ curl -q -N $url -o ${DEPLOYMENT_PATH}/hop.zip
 
 # Unzip
 unzip ${DEPLOYMENT_PATH}/hop.zip -d ${DEPLOYMENT_PATH}
-
+chmod -R 700 ${DEPLOYMENT_PATH}/hop
 
 # Cleanup
 rm ${DEPLOYMENT_PATH}/hop.zip

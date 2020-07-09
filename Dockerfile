@@ -68,7 +68,9 @@ COPY --chown=hop:hop ./resources/load-and-execute.sh ${DEPLOYMENT_PATH}/load-and
 
 
 # Fetch the specified hop version 
-RUN ${DEPLOYMENT_PATH}/get-hop.sh
+RUN ${DEPLOYMENT_PATH}/get-hop.sh \
+  && chown -R hop:hop ${DEPLOYMENT_PATH}/hop \
+  && chmod 700 ${DEPLOYMENT_PATH}/hop/*.sh
 
 EXPOSE 8080
 
@@ -77,4 +79,5 @@ VOLUME ["/files"]
 USER hop
 ENV PATH=$PATH:${DEPLOYMENT_PATH}/hop
 WORKDIR /home/hop
-ENTRYPOINT ["/bin/bash", "/opt/project-hop/run.sh"]
+CMD ["/bin/bash"]
+# ENTRYPOINT ["/bin/bash", "/opt/project-hop/run.sh"]

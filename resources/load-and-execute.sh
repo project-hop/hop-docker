@@ -36,13 +36,17 @@ write_server_config() {
 
 
 log "Registering project config with Hop"
-${DEPLOYMENT_PATH}/hop-conf.sh \
+log "${DEPLOYMENT_PATH}/hop/hop-conf.sh --project=${HOP_PROJECT_NAME} --project-home='${HOP_PROJECT_DIRECTORY}' --project-config-file='${HOP_PROJECT_CONFIG_FILE_NAME}'"
+
+${DEPLOYMENT_PATH}/hop/hop-conf.sh \
 --project=${HOP_PROJECT_NAME} \
 --project-home="${HOP_PROJECT_DIRECTORY}" \
---project-config-file="${HOP_PROJECT_CONFIG_FILE_NAME}"  
+--project-config-file="${HOP_PROJECT_CONFIG_FILE_NAME}"
 
 log "Registering environment config with Hop"
-${DEPLOYMENT_PATH}/hop-conf.sh \
+log "${DEPLOYMENT_PATH}/hop/hop-conf.sh --environment=${HOP_ENVIRONMENT_NAME} --environment-project=${HOP_PROJECT_NAME} --environment-config-files='${HOP_ENVIRONMENT_CONFIG_FILE_NAME_PATHS}'"
+
+${DEPLOYMENT_PATH}/hop/hop-conf.sh \
 --environment=${HOP_ENVIRONMENT_NAME} \
 --environment-project=${HOP_PROJECT_NAME} \
 --environment-config-files="${HOP_ENVIRONMENT_CONFIG_FILE_NAME_PATHS}"
