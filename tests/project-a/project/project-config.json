@@ -1,0 +1,15 @@
+{
+  "metadataBaseFolder" : "${PROJECT_HOME}/metadata",
+  "unitTestsBasePath" : "${PROJECT_HOME}",
+  "dataSetsCsvFolder" : "${PROJECT_HOME}/datasets",
+  "enforcingExecutionInHome" : true,
+  "config" : {
+    "variables" : [ {
+      "name" : "VAR_PROJECT_TEST1",
+      "value" : "a"
+    }, {
+      "name" : "VAR_PROJECT_TEST2",
+      "value" : "b"
+    } ]
+  }
+}

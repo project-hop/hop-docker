@@ -16,11 +16,19 @@ ENV HOP_FILE_PATH=
 # file path to hop log file, e.g. ~/hop.err.log
 ENV HOP_LOG_PATH=$DEPLOYMENT_PATH/hop.err.log
 # path to hop config directory
-ENV HOP_CONFIG_DIRECTORY=
+# ENV /files/project= DISABLED for now 
 # path to jdbc drivers
 ENV HOP_SHARED_JDBC_DIRECTORY=
+# name of the Hop project to use
+ENV HOP_PROJECT_NAME=
+# path to the home of the hop project. should start with `/files`.
+ENV HOP_PROJECT_DIRECTORY=
+# name of the project config file including file extension
+ENV HOP_PROJECT_CONFIG_FILE_NAME=project-config.json
 # environment to use with hop run
-ENV HOP_RUN_ENVIRONMENT=
+ENV HOP_ENVIRONMENT_NAME=
+# comma separated list of paths to environment config files (including filename and file extension). paths should start with `/files`.
+ENV HOP_ENVIRONMENT_CONFIG_FILE_NAME_PATHS=
 # hop run configuration to use
 ENV HOP_RUN_CONFIG=
 # parameters that should be passed on to the hop-run command
@@ -60,7 +68,9 @@ COPY --chown=hop:hop ./resources/load-and-execute.sh ${DEPLOYMENT_PATH}/load-and
 
 
 # Fetch the specified hop version 
-RUN ${DEPLOYMENT_PATH}/get-hop.sh
+RUN ${DEPLOYMENT_PATH}/get-hop.sh \
+  && chown -R hop:hop ${DEPLOYMENT_PATH}/hop \
+  && chmod 700 ${DEPLOYMENT_PATH}/hop/*.sh
 
 EXPOSE 8080
 
@@ -69,4 +79,5 @@ VOLUME ["/files"]
 USER hop
 ENV PATH=$PATH:${DEPLOYMENT_PATH}/hop
 WORKDIR /home/hop
+# CMD ["/bin/bash"]
 ENTRYPOINT ["/bin/bash", "/opt/project-hop/run.sh"]
