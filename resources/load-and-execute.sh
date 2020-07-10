@@ -45,7 +45,7 @@ ${DEPLOYMENT_PATH}/hop/hop-conf.sh \
 --project-config-file="${HOP_PROJECT_CONFIG_FILE_NAME}"
 
 log "Registering environment config with Hop"
-log "${DEPLOYMENT_PATH}/hop/hop-conf.sh --environment=${HOP_ENVIRONMENT_NAME} --environment-project=${HOP_PROJECT_NAME} --environment-config-files='${HOP_ENVIRONMENT_CONFIG_FILE_NAME_PATHS}'"
+log "${DEPLOYMENT_PATH}/hop/hop-conf.sh --environment-create --environment=${HOP_ENVIRONMENT_NAME} --environment-project=${HOP_PROJECT_NAME} --environment-config-files='${HOP_ENVIRONMENT_CONFIG_FILE_NAME_PATHS}'"
 
 ${DEPLOYMENT_PATH}/hop/hop-conf.sh \
 --environment=${HOP_ENVIRONMENT_NAME} \

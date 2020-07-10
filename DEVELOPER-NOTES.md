@@ -77,17 +77,6 @@ Now you are ready to run the test processes:
   --parameters=PARAM_LOG_MESSAGE=Hello,PARAM_WAIT_FOR_X_MINUTES=1
 ```
 
-To test the workflow within the **Docker container**:  
-
-```
-./hop-run.sh \
-  --file='${PROJECT_HOME}/pipelines-and-workflows/main.hwf' \
-  --project=project-a \
-  --environment=project-a-dev \
-  --runconfig=classic \
-  --parameters=PARAM_LOG_MESSAGE=Hello,PARAM_WAIT_FOR_X_MINUTES=1
-```
-
 
 ## How to run the workflow within the Docker container
 

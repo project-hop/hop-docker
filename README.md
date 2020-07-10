@@ -55,7 +55,7 @@ docker run -it --rm \
   --env HOP_RUN_PARAMETERS=PARAM_LOG_MESSAGE=Hello,PARAM_WAIT_FOR_X_MINUTES=1 \
   -v /path/to/local/dir:/files \
   --name my-simple-hop-container \
-  docker pull projecthop/hop:snapshot
+  docker pull projecthop/hop:<tag>
 ```
 
 If you need a **long-lived container**, this option is also available. Run this command e.g.:
@@ -63,13 +63,16 @@ If you need a **long-lived container**, this option is also available. Run this 
 ```bash
 docker run -it --rm \
   --env HOP_LOG_LEVEL=Basic \
-  --env HOP_ENVIRONMENT_DIRECTORY=/files \
+  --env HOP_PROJECT_DIRECTORY=/files/project \
+  --env HOP_PROJECT_NAME=project-a \
+  --env HOP_ENVIRONMENT_NAME=project-a-test \
+  --env HOP_ENVIRONMENT_CONFIG_FILE_NAME_PATHS=/files/config/project-a-test.json \
   --env HOP_SERVER_USER=admin \
   --env HOP_SERVER_PASS=admin \
   -p 8080:8080
   -v /path/to/local/dir:/files \
   --name my-simple-hop-container \
-  docker pull projecthop/hop:snapshot
+  docker pull projecthop/hop:<tag>
 ```
 
 You can then access the hop-server UI from your dockerhost at `http://localhost:8080`

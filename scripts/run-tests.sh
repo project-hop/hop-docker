@@ -74,6 +74,9 @@ docker run --rm \
   --env HOP_PROJECT_NAME=project-a \
   --env HOP_ENVIRONMENT_NAME=project-a-test \
   --env HOP_ENVIRONMENT_CONFIG_FILE_NAME_PATHS=/files/config/project-a-test.json \
+  --env HOP_SERVER_USER=admin \
+  --env HOP_SERVER_PASS=admin \
+  -p 8080:8080
   -v ${VOLUME_DIR}:/files \
   --name my-simple-hop-container \
   projecthop/hop:${HOP_LATEST_VERSION}
