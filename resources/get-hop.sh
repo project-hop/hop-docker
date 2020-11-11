@@ -1,44 +1,46 @@
 #!/bin/bash
 # Script used to fetch the latest snapshot version of project hop
 
+set -ex
+
 #Branch name variable
 echo Branch Parameter: ${BRANCH_NAME}
 
 # Artifactory location
-server=https://artifactory.project-hop.org/artifactory
+SERVER=https://repository.apache.org/content/repositories
 
 # Use Snapshot when branch is master else latest release
 if [[ "${BRANCH_NAME}" = "master" ]]
 then
-    repo=hop-snapshots
+    REPO=snapshots
 else
-    repo=hop-releases
+    REPO=releases
 fi
 
 # Maven artifact location
-name=hop-assemblies-client
-artifact=org/hop/$name
-path=$server/$repo/$artifact
-version=$(curl -s $path/maven-metadata.xml | grep latest | sed "s/.*<latest>\([^<]*\)<\/latest>.*/\1/")
-echo version: $version
-build=$(curl -s $path/$version/maven-metadata.xml | grep '<value>' | head -1 | sed "s/.*<value>\([^<]*\)<\/value>.*/\1/")
-echo build: $build
+NAME=hop-assemblies-client
+ARTIFACT=org/apache/hop/${NAME}
+URL_PATH=${SERVER}/${REPO}/${ARTIFACT}
+VERSION=$( curl -s "${URL_PATH}/maven-metadata.xml" -o - | grep '<version>' | sed 's/.*<version>\([^<]*\)<\/version>.*/\1/' )
+echo version: ${VERSION}
+BUILD=$( curl -s "${URL_PATH}/${VERSION}/maven-metadata.xml" | grep '<value>' | head -1 | sed 's/.*<value>\([^<]*\)<\/value>.*/\1/' )
+echo build: ${BUILD}
 
 #If build is empty then use version (release)
 if [ -z "$build" ]
 then
-    build=$version
+    build=${VERSION}
 fi
 
-zip=$name-$build.zip
-url=$path/$version/$zip
+ZIP=${NAME}-${BUILD}.zip
+URL=${URL_PATH}/${VERSION}/${ZIP}
 
 # Download
-echo $url
-curl -q -N $url -o ${DEPLOYMENT_PATH}/hop.zip
+echo ${URL}
+curl -q -N ${URL} -o ${DEPLOYMENT_PATH}/hop.zip
 
 # Unzip
-unzip ${DEPLOYMENT_PATH}/hop.zip -d ${DEPLOYMENT_PATH}
+unzip -q ${DEPLOYMENT_PATH}/hop.zip -d ${DEPLOYMENT_PATH}
 chmod -R 700 ${DEPLOYMENT_PATH}/hop
 
 # Cleanup
