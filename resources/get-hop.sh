@@ -18,7 +18,7 @@ else
 fi
 
 # Maven artifact location
-NAME=hop-assemblies-client
+NAME=hop-client
 ARTIFACT=org/apache/hop/${NAME}
 URL_PATH=${SERVER}/${REPO}/${ARTIFACT}
 VERSION=$( curl -s "${URL_PATH}/maven-metadata.xml" -o - | grep '<version>' | sed 's/.*<version>\([^<]*\)<\/version>.*/\1/' )
