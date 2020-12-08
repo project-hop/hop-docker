@@ -1,5 +1,5 @@
 FROM openjdk:8-alpine
-MAINTAINER Project Hop Team
+LABEL maintainer="Project Hop Team"
 # Argument Branch name, used to download correct version
 ARG BRANCH_NAME
 ENV BRANCH_NAME=$BRANCH_NAME
