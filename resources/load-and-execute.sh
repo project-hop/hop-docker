@@ -28,7 +28,7 @@ write_server_config() {
 
     log "Writing a hop-server config file to /tmp/hopserver.xml"
 
-    echo "<slave_config><slaveserver><name>master</name><hostname>0.0.0.0</hostname><port>8080</port><master>${HOP_SERVER_MASTER}</master><username>${HOP_SERVER_USER}</username><password>${HOP_SERVER_PASS}</password></slaveserver></slave_config>" > /tmp/hopserver.xml
+    echo "<hop-server-config><hop-server><name>server-8080</name><hostname>0.0.0.0</hostname><port>8080</port><master>${HOP_SERVER_MASTER}</master><username>${HOP_SERVER_USER}</username><password>${HOP_SERVER_PASS}</password></hop-server></hop-server-config>" > /tmp/hopserver.xml
 }
 
 # retrieve files from volume
