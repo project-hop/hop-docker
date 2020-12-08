@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "hop.fullname" . }}
+  labels:
+    {{- include "hop.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "hop.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "hop.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image:  "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - name: hello-port
+          containerPort: 8080
+        volumeMounts:
+        - name: vol
+          mountPath: /files
+          readOnly: false
+        env:
+          - name: HOP_LOG_LEVEL
+            value: {{ .Values.hopLogLevel }}
+          - name : HOP_PROJECT_DIRECTORY
+            value: {{ .Values.hopProjectDirectory }}
+          - name : HOP_PROJECT_NAME
+            value: {{ .Values.hopProjectName }}
+          - name : HOP_ENVIRONMENT_NAME
+            value: {{ .Values.hopEnvironmentName }}
+          - name : HOP_ENVIRONMENT_CONFIG_FILE_NAME_PATHS
+            value: {{ .Values.hopEnvironmentConfigFileNamePaths }}
+          - name : HOP_SERVER_USER
+            value: {{ .Values.hopServerUser }}
+          - name : HOP_SERVER_PASS
+            value: {{ .Values.hopServerPass }}
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: vol
+          hostPath:
+            path: /files
+            type: Directory
