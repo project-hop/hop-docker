@@ -23,7 +23,7 @@ spec:
           containerPort: 8080
         volumeMounts:
         - name: vol
-          mountPath: /files
+          mountPath: {{.Values.volumes.path}}
           readOnly: false
         env:
           - name: HOP_LOG_LEVEL
@@ -45,5 +45,8 @@ spec:
       volumes:
         - name: vol
           hostPath:
-            path: /files
-            type: Directory
+            path: {{.Values.volumes.path}}
+            type: {{.Values.volumes.type}}
+{{- if .Values.extraVolumes }}
+{{ toYaml .Values.extraVolumes | indent 6 }}
+{{- end }}

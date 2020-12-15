@@ -24,6 +24,10 @@ service:
   type: NodePort
   port: 8080
 
+volumes:
+  path: "/files"
+  type: "Directory"
+
 # Hop resources
 resources:
   requests:

@@ -21,127 +21,20 @@ The following prerequisites are needed to get started with Apache Hop and Helm.
 The following files form the Hop Helm Chart.
 
 ```
-hop/
-  Chart.yaml    # A YAML file containing information about the Hop chart
-  charts/       # A directory containing charts which the Hop chart depends on (a database, a queue, ... ).
-  templates/    # A directory which contains the Hop chart definitions which 
-                # generate Kubernetes manifest files based on values
-  values.yaml   # The default Hop configuration values
-```
-
-### Chart.yaml
-
-```
-apiVersion: v2
-name: hop
-description: A Helm chart for Apache Hop
-type: application
-
-# This is the chart version. This version number should be incremented each time you make changes
-# to the chart and its templates, including the app version.
-# Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.1.0
-
-# This is the version number of the Apache Hop Docker image. This version number should be
-# incremented each time you make changes to the application. Versions are not expected to
-# follow Semantic Versioning. They should reflect the version the application is using.
-# For simplicity this is set to latest but may be changed to reflect different Hop versions.
-appVersion: latest
+hop-docker/
+    kubernetes/
+        helm/
+            Chart.yaml    # A YAML file containing functional information about the Hop chart
+            charts/       # A directory containing charts which the Hop chart depends on (a database, a queue, ... ).
+            templates/    # A directory which contains the Hop chart definitions which 
+                          # generate Kubernetes manifest files based on values
+            values.yaml   # The default Hop configuration values
+            README.md     # A markdown file containing information about the Hop chart
 ```
 
 ## Templates and values
 
 The `deployment.yaml` and `_helpers.tpl` files are located in the `templates/` directory and are used with the `values.yaml` file to generate a valid Kubernetes manifest.
-
-### deployment.yaml
-
-```
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: {{ include "hop.fullname" . }}
-  labels:
-    {{- include "hop.labels" . | nindent 4 }}
-spec:
-  replicas: {{ .Values.replicaCount }}
-  selector:
-    matchLabels:
-      {{- include "hop.selectorLabels" . | nindent 6 }}
-  template:
-    metadata:
-      labels:
-        {{- include "hop.selectorLabels" . | nindent 8 }}
-    spec:
-      containers:
-      - name: {{ .Chart.Name }}
-        image:  "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-        ports:
-        - name: hello-port
-          containerPort: 8080
-        volumeMounts:
-        - name: vol
-          mountPath: /files
-          readOnly: false
-        env:
-          - name: HOP_LOG_LEVEL
-            value: {{ .Values.hopLogLevel }}
-          - name : HOP_PROJECT_DIRECTORY
-            value: {{ .Values.hopProjectDirectory }}
-          - name : HOP_PROJECT_NAME
-            value: {{ .Values.hopProjectName }}
-          - name : HOP_ENVIRONMENT_NAME
-            value: {{ .Values.hopEnvironmentName }}
-          - name : HOP_ENVIRONMENT_CONFIG_FILE_NAME_PATHS
-            value: {{ .Values.hopEnvironmentConfigFileNamePaths }}
-          - name : HOP_SERVER_USER
-            value: {{ .Values.hopServerUser }}
-          - name : HOP_SERVER_PASS
-            value: {{ .Values.hopServerPass }}
-        resources:
-          {{- toYaml .Values.resources | nindent 12 }}
-      volumes:
-        - name: vol
-          hostPath:
-            path: /files
-            type: Directory
-```
-
-### values.yaml
-
-```
-# Default values for hop.
-# This is a YAML-formatted file.
-
-replicaCount: 1
-hopLogLevel: "Basic"
-hopProjectDirectory: "/files"
-hopProjectName: "test"
-hopEnvironmentName: "test-env"
-hopEnvironmentConfigFileNamePaths: "/files/project-config.json"
-hopServerUser: "admin"
-hopServerPass: "admin"
-
-image:
-  repository: hop
-  pullPolicy: Never
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
-
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
-
-service:
-  type: NodePort
-  port: 8080
-
-# Hop resources
-resources:
-  requests:
-    memory: "1Gi"
-    cpu: "1"
-```
 
 ## Sharing Hop project configuration, workflows and pipelines
 

@@ -13,3 +13,4 @@ version: 0.1.0
 # follow Semantic Versioning. They should reflect the version the application is using.
 # For simplicity this is set to latest.
 appVersion: latest
+icon: https://hop.apache.org/tech-manual/latest/_images/logo/CMYK/jpg/HOP_logo_CMYK-4.jpg
